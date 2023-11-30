@@ -1,0 +1,7 @@
+{
+  "name": "turn-tracker",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
