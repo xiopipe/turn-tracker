@@ -9,6 +9,6 @@ export const routes: Routes = [
   {
     path: 'folder/:id',
     loadComponent: () =>
-      import('./folder/folder.page').then((m) => m.FolderPage),
+      import('./components/folder/folder.page').then((m) => m.FolderPage),
   },
 ];
