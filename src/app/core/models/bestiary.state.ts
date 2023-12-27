@@ -1,6 +1,6 @@
-import { IBestiary } from "./bestiary.model";
+import { IBestiary } from './bestiary.model'
 
 export interface IBestiaryState {
-  loading: boolean,
-	items: ReadonlyArray<IBestiary>;
+	loading: boolean
+	items: ReadonlyArray<IBestiary>
 }

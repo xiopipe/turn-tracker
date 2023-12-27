@@ -1,6 +1,6 @@
-import { ICharacter } from "./character.model";
+import { ICharacter } from './character.model'
 
 export interface ICharacterState {
-  loading: boolean,
-	items: ReadonlyArray<ICharacter>;
+	loading: boolean
+	items: ReadonlyArray<ICharacter>
 }
