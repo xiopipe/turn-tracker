@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common'
-import { Component } from '@angular/core'
+import { Component, inject } from '@angular/core'
 import { RouterLink, RouterLinkActive } from '@angular/router'
+import { Store } from '@ngrx/store'
 import {
 	IonApp,
 	IonSplitPane,
@@ -16,6 +17,7 @@ import {
 	IonRouterOutlet,
 	IonSelect,
 	IonSelectOption,
+	IonButton,
 } from '@ionic/angular/standalone'
 import { addIcons } from 'ionicons'
 import {
@@ -34,6 +36,10 @@ import {
 	bookmarkOutline,
 	bookmarkSharp,
 } from 'ionicons/icons'
+import { loadBestiary } from './state/actions/bestiary.actions'
+import { addEncounter, loadEncounter } from './state/actions/encounters.actions'
+import { IEncounter } from './core/models/encounter.model'
+import { AddEncounterComponent } from './components/add-encounter/add-encounter.component'
 
 @Component({
 	selector: 'app-root',
@@ -58,9 +64,13 @@ import {
 		IonRouterOutlet,
 		IonSelect,
 		IonSelectOption,
+		IonButton,
+		AddEncounterComponent,
 	],
 })
 export class AppComponent {
+	store = inject(Store)
+
 	public appPages = [
 		{ title: 'partys', url: '/encounters/:idParty', icon: 'mail' },
 		{ title: 'partys', url: '/encounters/:idParty', icon: 'mail' },
@@ -78,6 +88,8 @@ export class AppComponent {
 		{ title: 'partys', url: '/encounters/:idParty', icon: 'mail' },
 	]
 	constructor() {
+		this.store.dispatch(loadBestiary())
+		this.store.dispatch(loadEncounter())
 		addIcons({
 			mailOutline,
 			mailSharp,

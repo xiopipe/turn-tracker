@@ -16,6 +16,7 @@ import { ROOT_REDUCERS } from './app/state/app.state'
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { EffectsModule } from '@ngrx/effects'
 import { BestiaryEffects } from './app/state/effects/bestiary.effects'
+import { EncounterEffects } from './app/state/effects/encounters.effects'
 
 if (environment.production) {
 	enableProdMode()
@@ -30,11 +31,11 @@ bootstrapApplication(AppComponent, {
 		importProvidersFrom(
 			StoreModule.forRoot(ROOT_REDUCERS),
 			StoreDevtoolsModule.instrument({
-				name: 'test',
+				name: 'Turn Tracker',
 				maxAge: 25,
 				logOnly: environment.production,
 			}),
-			EffectsModule.forRoot([BestiaryEffects]),
+			EffectsModule.forRoot([BestiaryEffects, EncounterEffects]),
 		),
 	],
 })

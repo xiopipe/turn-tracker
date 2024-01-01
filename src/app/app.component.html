@@ -32,10 +32,15 @@
 				<ion-menu-toggle auto-hide="false">
 					<ion-item i18n> add character </ion-item>
 				</ion-menu-toggle>
-				<!--  -->
+				<!-- compoenent para reiniciar encuentro actual  -->
 				<ion-menu-toggle auto-hide="false">
 					<ion-item i18n> reset </ion-item>
 				</ion-menu-toggle>
+				<!-- agregar nuevo componente -->
+				<!-- <ion-menu-toggle auto-hide="false">
+					<ion-item i18n> new encounter </ion-item>
+				</ion-menu-toggle> -->
+				<app-add-encounter></app-add-encounter>
 			</ion-content>
 		</ion-menu>
 		<ion-router-outlet id="main-content"></ion-router-outlet>

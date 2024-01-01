@@ -7,9 +7,9 @@
 			"i18n": {
 				"sourceLocale": "en-US",
 				"locales": {
-					"es-LA": {
+					"es": {
 						"translation": "src/assets/locale/messages.es.xlf",
-						"baseHref": "es-LA"
+						"baseHref": "es"
 					}
 				}
 			},
@@ -27,7 +27,7 @@
 				"build": {
 					"builder": "@angular-devkit/build-angular:browser",
 					"options": {
-						"localize": ["es-LA"],
+						"localize": ["es"],
 						"outputPath": "www",
 						"index": "src/index.html",
 						"main": "src/main.ts",
