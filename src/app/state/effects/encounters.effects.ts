@@ -17,7 +17,7 @@ export class EncounterEffects {
 				this.encounterService.getEncounterData().pipe(
 					map((encounter) => ({
 						type: Encounter.LOADED,
-						encounter: encounter,
+						encounters: encounter,
 					})),
 				),
 			),

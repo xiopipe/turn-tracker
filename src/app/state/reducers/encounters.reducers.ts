@@ -1,6 +1,10 @@
 import { createReducer, on } from '@ngrx/store'
 import { IEncountersState } from '../../core/models/encounter.state'
-import { loadEncounter, loadedEncounter } from '../actions/encounters.actions'
+import {
+	addEncounter,
+	loadEncounter,
+	loadedEncounter,
+} from '../actions/encounters.actions'
 
 export const initialState: IEncountersState = {
 	loading: false,
@@ -20,4 +24,8 @@ export const encounterReducer = createReducer(
 		...state,
 		items: encounters,
 	})),
+	on(addEncounter, (state, { encounter }) => {
+		console.log(encounter)
+		return { ...state, items: [...state.items, encounter] }
+	}),
 )

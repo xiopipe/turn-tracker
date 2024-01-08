@@ -1,7 +1,67 @@
-<ion-menu-toggle id="open-modal" auto-hide="false">
+<!-- <ion-menu-toggle id="open-modal" auto-hide="false">
 	<ion-item i18n> new encounter </ion-item>
-</ion-menu-toggle>
+</ion-menu-toggle> -->
+
+<ion-button id="open-modal"> new encounter </ion-button>
 
 <ion-modal trigger="open-modal">
-	<p>add-encounter works!</p>
+	<ng-template>
+		<ion-header>
+			<ion-toolbar>
+				<ion-buttons slot="start">
+					<ion-button (click)="cancel()">Cancel</ion-button>
+				</ion-buttons>
+				<ion-title>Create new encounter</ion-title>
+				<ion-buttons slot="end">
+					<ion-button (click)="addEncounter()" [strong]="true"
+						>Confirm</ion-button
+					>
+				</ion-buttons>
+			</ion-toolbar>
+		</ion-header>
+		<ion-content class="ion-padding" [formGroup]="encounterForm">
+			<ion-item>
+				<ion-input
+					label="Enter your name"
+					labelPlacement="stacked"
+					type="text"
+					placeholder="Your name"
+					formControlName="name"
+				></ion-input>
+			</ion-item>
+			<ion-item>
+				<ion-input
+					label="Enter your name"
+					labelPlacement="stacked"
+					type="text"
+					placeholder="Your name"
+					formControlName="description"
+				></ion-input>
+			</ion-item>
+			<ion-item-divider>
+				<ion-label>Foes and beast</ion-label>
+			</ion-item-divider>
+			@for (item of encounterForm.controls.entity.controls; track $index) {
+				<ion-item>
+					<ion-select
+						placeholder="Select creature"
+						i18n-placeholder
+						interface="action-sheet"
+						[formControl]="item"
+					>
+						@for (item of bestiary$ | async; track $index) {
+							<ion-select-option [value]="item">
+								{{ item.name }}
+							</ion-select-option>
+						}
+					</ion-select>
+				</ion-item>
+			}
+
+			<ion-item>
+				<ion-button (click)="addNewEntity()"> add creature </ion-button>
+				<ion-button> add character </ion-button>
+			</ion-item>
+		</ion-content>
+	</ng-template>
 </ion-modal>
