@@ -15,6 +15,11 @@ export const addEncounter = createAction(
 	props<{ encounter: IEncounter }>(),
 )
 
+export const addedEncounter = createAction(
+	Encounter.ADDED,
+	props<{ encounter: IEncounter }>(),
+)
+
 export const updateEncounter = createAction(
 	Encounter.UPDATE,
 	props<{ encounter: IEncounter }>(),

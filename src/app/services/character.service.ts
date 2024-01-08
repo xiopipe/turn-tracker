@@ -3,6 +3,7 @@ import { Injectable, inject } from '@angular/core'
 import { db } from '../state/db'
 import { catchError, concatMap, from, map, of, tap } from 'rxjs'
 import { IBestiary } from '../core'
+import { IEncounter } from '../core/models/encounter.model'
 
 @Injectable({
 	providedIn: 'root',

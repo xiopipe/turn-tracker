@@ -2,6 +2,7 @@ import { createReducer, on } from '@ngrx/store'
 import { IEncountersState } from '../../core/models/encounter.state'
 import {
 	addEncounter,
+	addedEncounter,
 	loadEncounter,
 	loadedEncounter,
 } from '../actions/encounters.actions'
@@ -23,9 +24,12 @@ export const encounterReducer = createReducer(
 	on(loadedEncounter, (state, { encounters }) => ({
 		...state,
 		items: encounters,
+		loading: false,
 	})),
-	on(addEncounter, (state, { encounter }) => {
-		console.log(encounter)
-		return { ...state, items: [...state.items, encounter] }
-	}),
+	on(addEncounter, (state) => ({ ...state, loading: true })),
+	on(addedEncounter, (state, { encounter }) => ({
+		...state,
+		items: [...state.items, encounter],
+		loading: false,
+	})),
 )
