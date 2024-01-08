@@ -10,16 +10,12 @@
 						placeholder="Select encounter"
 						i18n-placeholder
 						interface="action-sheet"
+						(ionChange)="navigateToParties($event)"
 					>
-						@for (item of appPages; track $index) {
-							<ion-icon
-								aria-hidden="true"
-								slot="start"
-								[ios]="item.icon + '-outline'"
-								[md]="item.icon + '-sharp'"
-							></ion-icon>
-							<ion-select-option [value]="item.title">
-								{{ item.title }}
+						@for (item of encounters$ | async; track $index) {
+							<ion-icon aria-hidden="true" slot="start"></ion-icon>
+							<ion-select-option [value]="item.name">
+								{{ item.name }}
 							</ion-select-option>
 						}
 					</ion-select>

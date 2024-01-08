@@ -6,6 +6,7 @@ import { EncounterService } from 'src/app/services/encounter.service'
 import { Encounter } from '../actions-types.enums'
 import { db } from '../db'
 import { IEncounter } from 'src/app/core/models/encounter.model'
+import { EncountersActions } from '../actions'
 
 @Injectable()
 export class EncounterEffects {
@@ -14,14 +15,15 @@ export class EncounterEffects {
 
 	loadEncounters$ = createEffect(() =>
 		this.actions$.pipe(
-			ofType(Encounter.LOAD),
+			ofType(EncountersActions.loadEncounter),
 			mergeMap(() =>
-				this.encounterService.getEncounterData().pipe(
-					map((encounter) => ({
-						type: Encounter.LOADED,
-						encounters: encounter,
-					})),
-				),
+				this.encounterService
+					.getEncounterData()
+					.pipe(
+						map((encounter) =>
+							EncountersActions.loadedEncounter({ encounters: encounter }),
+						),
+					),
 			),
 		),
 	)
@@ -31,10 +33,7 @@ export class EncounterEffects {
 			ofType(Encounter.ADD),
 			mergeMap(({ encounter }) =>
 				from(db.encounter.add(encounter)).pipe(
-					mergeMap(() => {
-						return [{ type: Encounter.ADDED, encounter: encounter }]
-					}),
-					catchError(() => EMPTY),
+					map(() => EncountersActions.addedEncounter({ encounter })),
 				),
 			),
 		),

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common'
 import { Component, inject } from '@angular/core'
-import { RouterLink, RouterLinkActive } from '@angular/router'
+import { Router, RouterLink, RouterLinkActive } from '@angular/router'
 import { Store } from '@ngrx/store'
 import {
 	IonApp,
@@ -18,6 +18,8 @@ import {
 	IonSelect,
 	IonSelectOption,
 	IonButton,
+	SelectCustomEvent,
+	MenuController,
 } from '@ionic/angular/standalone'
 import { addIcons } from 'ionicons'
 import {
@@ -40,6 +42,7 @@ import { loadBestiary } from './state/actions/bestiary.actions'
 import { addEncounter, loadEncounter } from './state/actions/encounters.actions'
 import { IEncounter } from './core/models/encounter.model'
 import { AddEncounterComponent } from './components/add-encounter/add-encounter.component'
+import { selectListEncounters } from './state/selectors/encounter.selectors'
 
 @Component({
 	selector: 'app-root',
@@ -70,23 +73,11 @@ import { AddEncounterComponent } from './components/add-encounter/add-encounter.
 })
 export class AppComponent {
 	store = inject(Store)
+	router = inject(Router)
+	menuController = inject(MenuController)
 
-	public appPages = [
-		{ title: 'partys', url: '/encounters/:idParty', icon: 'mail' },
-		{ title: 'partys', url: '/encounters/:idParty', icon: 'mail' },
-		{ title: 'partys', url: '/encounters/:idParty', icon: 'mail' },
-		{ title: 'partys', url: '/encounters/:idParty', icon: 'mail' },
-		{ title: 'partys', url: '/encounters/:idParty', icon: 'mail' },
-		{ title: 'partys', url: '/encounters/:idParty', icon: 'mail' },
-		{ title: 'partys', url: '/encounters/:idParty', icon: 'mail' },
-		{ title: 'partys', url: '/encounters/:idParty', icon: 'mail' },
-		{ title: 'partys', url: '/encounters/:idParty', icon: 'mail' },
-		{ title: 'partys', url: '/encounters/:idParty', icon: 'mail' },
-		{ title: 'partys', url: '/encounters/:idParty', icon: 'mail' },
-		{ title: 'partys', url: '/encounters/:idParty', icon: 'mail' },
-		{ title: 'partys', url: '/encounters/:idParty', icon: 'mail' },
-		{ title: 'partys', url: '/encounters/:idParty', icon: 'mail' },
-	]
+	public encounters$ = this.store.select(selectListEncounters)
+
 	constructor() {
 		this.store.dispatch(loadBestiary())
 		this.store.dispatch(loadEncounter())
@@ -106,5 +97,14 @@ export class AppComponent {
 			bookmarkOutline,
 			bookmarkSharp,
 		})
+	}
+
+	navigateToParties(event: SelectCustomEvent) {
+		this.router.navigate(['/partys', event.detail.value])
+		this.closeMenu()
+	}
+
+	closeMenu() {
+		this.menuController.close()
 	}
 }
