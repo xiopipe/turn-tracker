@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common'
-import { Component, inject } from '@angular/core'
+import { Component, ViewChild, inject } from '@angular/core'
 import { Router, RouterLink, RouterLinkActive } from '@angular/router'
 import { Store } from '@ngrx/store'
 import {
@@ -20,6 +20,7 @@ import {
 	IonButton,
 	SelectCustomEvent,
 	MenuController,
+	IonModal,
 } from '@ionic/angular/standalone'
 import { addIcons } from 'ionicons'
 import {
@@ -37,12 +38,14 @@ import {
 	warningSharp,
 	bookmarkOutline,
 	bookmarkSharp,
+	arrowForwardOutline,
 } from 'ionicons/icons'
 import { loadBestiary } from './state/actions/bestiary.actions'
 import { addEncounter, loadEncounter } from './state/actions/encounters.actions'
 import { IEncounter } from './core/models/encounter.model'
 import { AddEncounterComponent } from './components/add-encounter/add-encounter.component'
 import { selectListEncounters } from './state/selectors/encounter.selectors'
+import { SelectEncounterComponent } from './components/select-encounter/select-encounter.component'
 
 @Component({
 	selector: 'app-root',
@@ -69,12 +72,16 @@ import { selectListEncounters } from './state/selectors/encounter.selectors'
 		IonSelectOption,
 		IonButton,
 		AddEncounterComponent,
+		IonModal,
+		SelectEncounterComponent,
 	],
 })
 export class AppComponent {
 	store = inject(Store)
 	router = inject(Router)
 	menuController = inject(MenuController)
+
+	@ViewChild('modal', { static: true }) modal!: IonModal
 
 	public encounters$ = this.store.select(selectListEncounters)
 
@@ -96,6 +103,7 @@ export class AppComponent {
 			warningSharp,
 			bookmarkOutline,
 			bookmarkSharp,
+			arrowForwardOutline,
 		})
 	}
 
