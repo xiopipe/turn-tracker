@@ -21,9 +21,18 @@ import {
 	IonToolbar,
 	SearchbarCustomEvent,
 } from '@ionic/angular/standalone'
-import { Store } from '@ngrx/store'
-import { filter, map } from 'rxjs'
-import { selectListEncounters } from 'src/app/state/selectors/encounter.selectors'
+import { Store, select } from '@ngrx/store'
+import {
+	debounceTime,
+	distinctUntilChanged,
+	filter,
+	map,
+	switchMap,
+} from 'rxjs'
+import {
+	selectListEncounterFiltered,
+	selectListEncounters,
+} from 'src/app/state/selectors/encounter.selectors'
 
 @Component({
 	selector: 'app-select-encounter',
@@ -55,9 +64,10 @@ import { selectListEncounters } from 'src/app/state/selectors/encounter.selector
 })
 export class SelectEncounterComponent implements OnInit {
 	store = inject(Store)
-
 	public encounters$ = this.store.select(selectListEncounters)
-
+	public encountersFiltered$ = this.store.select(
+		selectListEncounterFiltered(''),
+	)
 	constructor() {}
 
 	ngOnInit() {}
@@ -75,14 +85,14 @@ export class SelectEncounterComponent implements OnInit {
 	}
 
 	filterList(searchQuery: string | undefined | null) {
+		this.encountersFiltered$
 		if (searchQuery === undefined || searchQuery === null) return
-		this.encounters$ = this.store
-			.select(selectListEncounters)
+		this.encountersFiltered$ = this.store
+			.select(selectListEncounterFiltered(searchQuery))
 			.pipe(
-				map((encounters) =>
-					encounters.filter((encounter) =>
-						encounter.name.includes(searchQuery),
-					),
+				distinctUntilChanged(), // Opcional: Evita búsquedas innecesarias si el valor no ha cambiado.
+				switchMap(() =>
+					this.store.select(selectListEncounterFiltered(searchQuery)),
 				),
 			)
 	}

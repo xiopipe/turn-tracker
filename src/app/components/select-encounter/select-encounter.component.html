@@ -21,7 +21,7 @@
 				</ion-toolbar>
 			</ion-header>
 			<ion-list>
-				@for (item of encounters$ | async; track $index) {
+				@for (item of encountersFiltered$ | async; track $index) {
 					<ion-item>
 						{{ item?.name }}
 					</ion-item>

@@ -13,3 +13,14 @@ export const selectLoadingEncounter = createSelector(
 	selectEncounterFeature,
 	(state: IEncountersState) => state.loading,
 )
+
+export const selectListEncounterFiltered = (queryFilter: string) =>
+	createSelector(selectEncounterFeature, (state: IEncountersState) =>
+		state.items.filter((item) => item.name.includes(queryFilter)),
+	)
+
+// export const selectListEncounterFiltered = (queryFilter: string) =>
+// 	createSelector(
+//     selectEncounterFeature,
+//     (state) => state.items
+// 	)
